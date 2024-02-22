@@ -35,27 +35,51 @@ use("esports_relation");
 //   ],
 // });
 
-db.students.aggregate([
+// db.students.aggregate([
+//   {
+//     $match: {},
+//   },
+
+//   {
+//     $lookup: {
+//       from: "courses",
+//       localField: "enrolledCourseIds",
+//       foreignField: "_id",
+//       as: "courseDetails",
+//     },
+//   },
+//   {
+//     $project: {
+//       name: 1,
+//       address: 1,
+//       email: 1,
+
+//       "courseDetails.name": 1,
+//       "courseDetails.duration": 1,
+//     },
+//   },
+// ]);
+
+db.courses.aggregate([
   {
     $match: {},
   },
 
   {
     $lookup: {
-      from: "courses",
-      localField: "enrolledCourseIds",
-      foreignField: "_id",
-      as: "courseDetails",
+      from: "students",
+      localField: "_id",
+      foreignField: "enrolledCourseIds",
+      as: "studentData",
     },
   },
   {
     $project: {
       name: 1,
-      address: 1,
-      email: 1,
+      duration: 1,
 
-      "courseDetails.name": 1,
-      "courseDetails.duration": 1,
+      "studentData.name": 1,
+      "sudentData.email": 1,
     },
   },
 ]);
